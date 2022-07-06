@@ -5,15 +5,17 @@ export default function Users() {
     const [users, setUsers] = useState()
 
     useEffect(() => {
+      if (!users) {
         const getData = async () => {
             const res = await fetch("/api/getUsers");
             const data = await res.json()
 
-            setUsers(data)
-        }
+            setUsers(data);
+        };
 
         getData()
-    }, []);
+      }
+    }, [users]);
 
     const handleDelete = useCallback(async (_id) => {
         await fetch("/api/deleteUser?_id=" + _id, {
